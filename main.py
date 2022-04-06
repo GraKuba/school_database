@@ -6,6 +6,7 @@ print(sys.argv)
 
 # CLASSES
 
+
 class Classroom:
     def __init__(self, index, head_teacher, student):
         self.index = index
@@ -40,4 +41,6 @@ class Student:
 
 # FUNCTIONS
 
-for idx in data_storage
+
+for idx in data_storage:
+    print()
