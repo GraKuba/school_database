@@ -8,15 +8,11 @@ teachers = []
 students = []
 classes_working = []
 classes = []
+v1 = []
+v2 = []
+dct = {}
+
 # CLASSES
-
-
-"""class Klasa:
-    def __init__(self, index, head_teacher, student):
-        self.index = index
-        self.head_teacher = head_teacher
-        self.students = student"""
-
 
 class Wychowawca:
     def __init__(self, name, classroom):
@@ -90,18 +86,29 @@ for idx in data_storage:
             students.append(Uczen(idx[1], idx[2]))
 
 
-# CREATING A LIST OF UNIQUE CLASSROOMS
+# CREATING A LISTS OF UNIQUE CLASSROOMS AND NAMES
 
 for idx in classes_working:
     for single_idx in idx:
         if single_idx not in classes:
             classes.append(single_idx)
 
+head_teachers_names = []
+for person in head_teachers:
+    head_teachers_names.append(person.name)
+teachers_names = []
+for person in teachers:
+    teachers_names.append(person.name)
+students_names = []
+for person in students:
+    students_names.append(person.name)
+
 
 # TAKING INPUT FROM THE TERMINAL AND RETURNING ADEQUATE INFORMATION
 
 head_teachers_list = []
 student_list = []
+
 if action in classes:
     for person in head_teachers:
         if action in person.classroom:
@@ -109,27 +116,35 @@ if action in classes:
     for person in students:
         if action in person.classroom:
             student_list.append(person.name)
-
-
-print(head_teachers_list)
-print(student_list)
-
-
-"""print("Head Teachers")
-for person in head_teachers:
-    print(f"Full name: {person.name} | Classes: {person.classroom}")
-print()
-for person in teachers:
-    print(f"Full name: {person.name} | Subject: {person.subject} | Classes: {person.classroom}")
-print()
-for person in students:
-    print(f"Full name: {person.name} | Classes: {person.classroom}")"""
-
-"""if action == Klasa.index:
-    ...
-elif action == Wychowawca.name:
-    ...
-elif action == Nauczyciel.name:
-    ...
-elif action == Uczen.name:
-    ..."""
+    print(f"Wychowawca: {head_teachers_list} | Uczniowie: {student_list}")
+if len(sys.argv) > 2:
+    action = sys.argv[1] + " " + sys.argv[2]
+    if action in head_teachers_names:
+        for person in head_teachers:
+            if person.name == action:
+                for person_1 in students:
+                    if person_1.classroom in person.classroom:
+                        student_list.append(person_1.name)
+        print(f"Wychowawca: {action} | Uczniowie: {student_list}")
+    elif action in teachers_names:
+        for person in teachers:
+            if person.name == action:
+                for single_class in person.classroom:
+                    for person_1 in head_teachers:
+                        if single_class in person_1.classroom:
+                            if person_1.name not in head_teachers_list:
+                                head_teachers_list.append(person_1.name)
+        print(f"Nauczyciele: {head_teachers_list}")
+    elif action in students_names:
+        for person in students:
+            if person.name == action:
+                for idx in teachers:
+                    if person.classroom in idx.classroom:
+                        v1.append(idx.name)
+                        v2.append(idx.subject)
+        for idx in range(len(v1)):
+            dct[v1[idx]] = v2[idx]
+        for position in dct:
+            print(f"{position} | {dct[position]}")
+    else:
+        print("Nieodpowienia komenda")
